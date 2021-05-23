@@ -15,7 +15,7 @@ jobs:
        env:
            SSH_AUTH_SOCK: /tmp/ssh_agent.sock
      - name: clone repository
-       run: git clone git@github.com:kuIoIo/green.git
+       run: git clone git@github.com:kuIoIo/green.git ~/js
        env:
            SSH_AUTH_SOCK: /tmp/ssh_agent.sock
      - name: Use Node.js 14.x
