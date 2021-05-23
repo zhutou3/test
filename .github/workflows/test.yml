@@ -6,18 +6,8 @@ jobs:
   build:
     runs-on: ubuntu-latest       
     steps:
-     - name: setup SSH keys and known_hosts
-       run: |
-           mkdir -p ~/.ssh
-           ssh-keyscan github.com >> ~/.ssh/known_hosts
-           ssh-agent -a $SSH_AUTH_SOCK > /dev/null
-           ssh-add - <<< "${{ secrets.ID_RSA }}"
-       env:
-           SSH_AUTH_SOCK: /tmp/ssh_agent.sock
      - name: clone repository
-       run: git clone git@github.com:kuIoIo/green.git
-       env:
-           SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+       run: git clone https://github.com/kuIoIo/green.git ~/js
      - name: Use Node.js 14.x
        uses: actions/setup-node@v1
        with:
