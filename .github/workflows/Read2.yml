@@ -5,7 +5,7 @@ on:
   schedule:
      - cron: '0 1,10 * * *'
   watch:
-  types: started
+    types: started
 jobs:
   build:
     runs-on: ubuntu-latest
