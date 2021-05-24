@@ -3,7 +3,7 @@ name: test3
 on:
   workflow_dispatch:
   schedule:
-    - cron: '30 0-16/2 * * *'
+    - cron: '20 0-17,22,23 * * *'
   watch:
     types: started
 jobs:
