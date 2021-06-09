@@ -1,0 +1,39 @@
+name: test3
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '20 0-17,22,23 * * *'
+  watch:
+    types: started
+jobs:
+  build:
+    runs-on: ubuntu-latest       
+    steps:
+     - name: setup SSH keys and known_hosts
+       run: |
+           mkdir -p ~/.ssh
+           ssh-keyscan github.com >> ~/.ssh/known_hosts
+           ssh-agent -a $SSH_AUTH_SOCK > /dev/null
+           ssh-add - <<< "${{ secrets.ID_RSA }}"
+       env:
+           SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+     - name: clone repository
+       run: git clone git@github.com:zhutou3/green.git ~/js
+       env:
+           SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+     - name: Use Node.js 14.x
+       uses: actions/setup-node@v1
+       with:
+          node-version: 14.x
+     - name: npm install
+       run: |
+          cd ~/js
+          npm install
+          npm install cron
+          npm install request
+          npm install md5-node
+     - name: '运行 【test3】'
+       run: |
+         cd ~/js   
+         node test3.js
