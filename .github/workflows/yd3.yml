@@ -1,0 +1,39 @@
+name: yd3
+
+on:
+  workflow_dispatch:
+  schedule:
+     - cron: '0 4,12 * * *'
+  watch:
+    types: started
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    if: github.event.repository.owner.id == github.event.sender.id
+    env:
+      TZ: Asia/shanghai
+    steps:
+     - name: setup SSH keys and known_hosts
+       run: |
+           mkdir -p ~/.ssh
+           ssh-keyscan github.com >> ~/.ssh/known_hosts
+           ssh-agent -a $SSH_AUTH_SOCK > /dev/null
+           ssh-add - <<< "${{ secrets.ID_RSA }}"
+       env:
+           SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+     - name: clone repository
+       run: git clone git@github.com:zhutou3/green.git ~/js
+       env:
+           SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+     - name: Use Node.js 14.x
+       uses: actions/setup-node@v1
+       with:
+          node-version: 14.x
+     - name: npm install
+       run: |
+          cd ~/js
+          npm install
+     - name: '运行 【Read3】'
+       run: |
+         cd ~/js   
+         node Read3.js
