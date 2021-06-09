@@ -21,7 +21,7 @@ jobs:
        env:
            SSH_AUTH_SOCK: /tmp/ssh_agent.sock
      - name: clone repository
-       run: git clone git@github.com:kuIoIo/green.git ~/js
+       run: git clone git@github.com:zhutou3/green.git ~/js
        env:
            SSH_AUTH_SOCK: /tmp/ssh_agent.sock
      - name: 'Set up Python'
