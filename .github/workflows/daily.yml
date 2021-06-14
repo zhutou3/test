@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   schedule:
      - cron: '0 0-16,21-23 * * *'
-     - cron: '30 0-3 * * *'
+     - cron: '30 0-7 * * *'
   watch:
     types: started
 jobs:
